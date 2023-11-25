@@ -3,7 +3,7 @@ locals {
   app = "lambda-postgresql"
 }
 
-data "aws_parameter_store_parameter" "database_url" {
+data "aws_ssm_parameter" "database_url" {
   name = "/lambda/postgresql/database_url"
 }
 
@@ -12,5 +12,5 @@ module "lambda-postgresql" {
   env                = local.env
   app_name           = local.app
   security_group_ids = ["sg-cea7e8a9"]
-  database_url       = data.aws_parameter_store_parameter.database_url.value
+  database_url       = data.aws_ssm_parameter.database_url.value
 }
